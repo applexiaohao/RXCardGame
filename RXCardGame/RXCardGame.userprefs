@@ -1,11 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/RX_Manager.cs">
     <Files>
-      <File FileName="Assets/RX_PopCardSet.cs" Line="66" Column="33" />
-      <File FileName="Assets/RX_Manager.cs" Line="54" Column="4" />
-      <File FileName="Assets/RX_PopCardSetManager.cs" Line="111" Column="34" />
-      <File FileName="Assets/RX_SeatInfo.cs" Line="222" Column="7" />
+      <File FileName="Assets/RX_PopCardSet.cs" Line="57" Column="17" />
+      <File FileName="Assets/RX_Manager.cs" Line="139" Column="24" />
+      <File FileName="Assets/RX_PopCardSetManager.cs" Line="134" Column="1" />
+      <File FileName="Assets/RX_SeatInfo.cs" Line="230" Column="29" />
+      <File FileName="Assets/NGUI/Scripts/UI/UILabel.cs" Line="264" Column="1" />
+      <File FileName="Assets/RX_CardSet.cs" Line="82" Column="6" />
+      <File FileName="Assets/RX_CardManager.cs" Line="184" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
