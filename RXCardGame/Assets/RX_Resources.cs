@@ -12,6 +12,9 @@ using UnityEngine;
 
 namespace AssemblyCSharp
 {
+	/// <summary>
+	/// 现在的功能就是为了加载图集资源
+	/// </summary>
 	public class RX_Resources
 	{
 		/// <summary>
@@ -19,6 +22,8 @@ namespace AssemblyCSharp
 		/// </summary>
 		private RX_Resources ()
 		{
+			//Resources是UnityEngine的一个类
+			//加载./Assets/Resource/的资源...
 			card_atlas = (UIAtlas)Resources.Load("Puke",typeof(UIAtlas));
 		}
 
@@ -35,6 +40,9 @@ namespace AssemblyCSharp
 		}
 
 
+		/// <summary>
+		/// 只有Get函数的CardAtlas属性...
+		/// </summary>
 		private UIAtlas card_atlas;
 		public UIAtlas CardAtlas{
 			get{

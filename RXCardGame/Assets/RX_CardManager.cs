@@ -81,6 +81,9 @@ namespace AssemblyCSharp
 
 		#region CareSpriteList
 
+		/// <summary>
+		/// 精灵池...
+		/// </summary>
 		private static List<UISprite> sprite_pool = null;
 		private static List<UISprite> Pool{
 			get{
@@ -90,15 +93,30 @@ namespace AssemblyCSharp
 				return sprite_pool;
 			}
 		}
+
+		/// <summary>
+		/// 通过一张牌对象和容器对象还有坐标x创建一张图片
+		/// </summary>
+		/// <returns>The sprite by.</returns>
+		/// <param name="card">Card.</param>
+		/// <param name="parent">Parent.</param>
+		/// <param name="x">The x coordinate.</param>
 		public static UISprite CreateSpriteBy(RX_Card card,UISprite parent,int x)
 		{			
+			//创建精灵对象,通过NGUITools.AddChild函数
 			UISprite sprite = NGUITools.AddChild<UISprite> (parent.gameObject);
+
+			//为图片对象添加碰撞器...
 			NGUITools.AddWidgetCollider (sprite.gameObject);
+
+			//为一个NGUI的游戏控件,添加缺失的组件
 			UIButton button = NGUITools.AddMissingComponent<UIButton> (sprite.gameObject);
 	
 			sprite.depth = x + 300;
 			sprite.atlas = RX_Resources.DefaultResources.CardAtlas;
 			sprite.spriteName = card.ToString ();
+
+			//设置NGUI控件在屏幕上的显示位置和大小
 			sprite.SetRect (x, card.PositionY, 42f, 60f);
 
 		
@@ -110,17 +128,24 @@ namespace AssemblyCSharp
 			}));
 
 
+			//在CreateSpriteBy函数实现的最后
+			//将创建的精灵对象添加到sprite池内
 			sprite_pool.Add (sprite);
 
 			return sprite;
 		}
 
+		/// <summary>
+		/// 将数组内的所有游戏对象全部销毁,并且移除数组...
+		/// </summary>
 		public static void RefreshPool()
 		{
 			for (int i = 0; i < Pool.Count; i++) 
 			{
+				//销毁游戏对象
 				UnityEngine.GameObject.Destroy (sprite_pool [i].gameObject);
 			}
+			//从数组内移除所有的游戏对象
 			sprite_pool.RemoveRange (0, sprite_pool.Count);
 		}
 

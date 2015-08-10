@@ -30,6 +30,9 @@ namespace AssemblyCSharp
 	{
 		#region Game UI Property
 
+		/// <summary>
+		/// 定义座位类型  地主、农民、普通
+		/// </summary>
 		private RX_ROLE_TYPE seat_type;
 		public RX_ROLE_TYPE Type{
 			set{
@@ -40,6 +43,9 @@ namespace AssemblyCSharp
 			}
 		}
 
+		/// <summary>
+		/// 座位的位置  左边、右边、下边
+		/// </summary>
 		private RX_SEAT_POSITION seat_pos;
 		public RX_SEAT_POSITION Position{
 			set{
@@ -66,6 +72,10 @@ namespace AssemblyCSharp
 			}
 		}
 
+		/// <summary>
+		/// 当前座位已经确定好PositionType后,UI界面的位置也已经确定
+		/// 只需要Get就够了
+		/// </summary>
 		private Vector3 ui_pos;
 		public Vector3 UIPosition{
 			get{
@@ -75,7 +85,11 @@ namespace AssemblyCSharp
 
 		#endregion
 
-
+		/// <summary>
+		/// 构造函数
+		/// </summary>
+		/// <param name="pos">座位的位置 左边、右边、下边</param>
+		/// <param name="pool">座位上纸牌的容器 pool</param>
 		public RX_SeatInfo (RX_SEAT_POSITION pos,UISprite pool)
 		{
 			this.Type 	= RX_ROLE_TYPE.RX_ROLE_NORMAL;
@@ -85,6 +99,9 @@ namespace AssemblyCSharp
 
 		private UISprite	seat_container;
 
+		/// <summary>
+		/// 当前座位上还剩下的手牌列表
+		/// </summary>
 		private List<RX_Card> card_list;
 		public List<RX_Card> CardList{
 			set
@@ -101,7 +118,7 @@ namespace AssemblyCSharp
 
 
 		/// <summary>
-		/// Layouts the card list.
+		/// 布局...
 		/// </summary>
 		private void LayoutCardList()
 		{
@@ -109,6 +126,8 @@ namespace AssemblyCSharp
 				return (int)y.Level - (int)x.Level;
 			});
 
+			//每次将所有的剩余牌都要创建对象显示时
+			//都应该将精灵池刷新一次..
 			RX_CardManager.RefreshPool ();
 				
 			int width 	= this.seat_container.width;
@@ -129,17 +148,29 @@ namespace AssemblyCSharp
 			}
 		}
 
+		/// <summary>
+		/// 属于RX_SeatInfo对象的弹出函数...
+		/// </summary>
+		/// <returns>The card set.</returns>
 		public RX_CardSet PopCardSet()
 		{
+			//List对象有个FindAll函数
+			//FindAll函数需要一个谓词Predicate条件,凡是复合该条件的所有List内的元素都会被添加
+			//到一个新的List对象内
 			List<RX_Card> list = this.CardList.FindAll ((RX_Card obj) => {
 				return obj.IsPop;
 			});
 
+			//创建一个新的牌型集合...
 			RX_CardSet card_set = new RX_CardSet ();
+			//将选中的所有牌赋值给新的牌型集合对象
 			card_set.Lister = list;
 
 
 
+			//通过CardType的11种牌型函数判断，只要有一个为真
+			//那么则为正确的牌型
+			//当都为假的时候,说明牌型不正确,不能出牌..
 			if (RX_CardType.IsDan (card_set) ||
 			    RX_CardType.IsDui (card_set) ||
 			    RX_CardType.IsShunzi (card_set) ||
@@ -152,12 +183,16 @@ namespace AssemblyCSharp
 			    RX_CardType.IsSandaiyi (card_set) ||
 			    RX_CardType.IsSidaier (card_set)) 
 			{
+				//List对象的RemoveAll函数需要谓词作为参数
+				//凡是复合该条件的所有对象,都会从List对象中删除
 				this.CardList.RemoveAll ((RX_Card obj) => {
 					return obj.IsPop;
 				});
 
+				//重新布局当前剩余纸牌
 				this.LayoutCardList ();
 
+				//将刚刚打出的牌型集合返回..
 				return card_set;
 			} else {
 				return null;

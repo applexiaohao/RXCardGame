@@ -35,10 +35,16 @@ public class RX_Manager : MonoBehaviour {
 	
 	}
 
+	/// <summary>
+	/// 弹出选中的牌型
+	/// </summary>
 	public void PopSet()
 	{
 		RX_CardSet cardset = bottom_seat.PopCardSet ();
 
+		//当牌型不属于斗地主牌型时,cardset则为null
+		//例如,选中的牌是3,4
+		//例如,选中的牌是qq,kk,aa,22s
 		if (cardset == null) {
 			label.text = "出牌失败";
 			Debug.Log ("出牌失败");
@@ -48,12 +54,15 @@ public class RX_Manager : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// 洗牌函数
+	/// </summary>
 	public void Reshuffle()
 	{
 		//shuffle the card
 		List<RX_Card> list = RX_CardManager.DefaultManager().Reshuffle ();
 
-
+		//创建底下的座位对象
 		bottom_seat = new RX_SeatInfo(RX_SEAT_POSITION.RX_SEAT_BOTTOM,this.bottom_pool);
 		bottom_seat.CardList = list.GetRange(0,17);
 	}

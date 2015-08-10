@@ -180,8 +180,14 @@ namespace AssemblyCSharp
 		}	
 
 
+		/// <summary>
+		/// 只有Get函数的PositionY属性
+		/// </summary>
+		/// <value>The position y.</value>
 		public float PositionY
 		{
+			// 		1
+			//111111 111111111111111
 			get{ 
 				if (this.IsPop) {
 					return 10f;
