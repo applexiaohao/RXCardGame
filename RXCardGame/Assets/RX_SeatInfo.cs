@@ -24,6 +24,7 @@ namespace AssemblyCSharp
 		RX_SEAT_BOTTOM 	= 0,
 		RX_SEAT_LEFT 	= 1,
 		RX_SEAT_RIGHT 	= 2,
+		RX_SEAT_TOP		= 3,
 	}
 
 	public class RX_SeatInfo
@@ -128,22 +129,28 @@ namespace AssemblyCSharp
 
 			//每次将所有的剩余牌都要创建对象显示时
 			//都应该将精灵池刷新一次..
-			RX_CardManager.RefreshPool ();
+			RX_CardManager.RefreshPool (this.Position);
 				
 			int width 	= this.seat_container.width;
 			int height	= this.seat_container.height;
 
 			//每个人最多20张牌,计算出最小的间距
-			int margin = width / 20;
+			int margin = 0;
+			if (this.Position == RX_SEAT_POSITION.RX_SEAT_LEFT ||
+			    this.Position == RX_SEAT_POSITION.RX_SEAT_RIGHT) {
+				margin = height / 20;
+			} else {
+				margin = width / 20;
+			}
+
 			//求出现在剩余多少张牌
 			int count = this.card_list.Count;
 
-			int minx = 0 - count / 2 * margin;
-
-			int temp = minx;
+			int min = 0 - count / 2 * margin;
+			int temp = min;
 			for (int i = 0; i < count; i++) 
 			{
-				RX_CardManager.CreateSpriteBy (this.card_list [i], this.seat_container, temp);
+				RX_CardManager.CreateSpriteBy (this.card_list [i], this.seat_container, temp,this.Position);
 				temp += margin;
 			}
 		}
@@ -183,20 +190,55 @@ namespace AssemblyCSharp
 			    RX_CardType.IsSandaiyi (card_set) ||
 			    RX_CardType.IsSidaier (card_set)) 
 			{
-				//List对象的RemoveAll函数需要谓词作为参数
-				//凡是复合该条件的所有对象,都会从List对象中删除
-				this.CardList.RemoveAll ((RX_Card obj) => {
-					return obj.IsPop;
-				});
-
-				//重新布局当前剩余纸牌
-				this.LayoutCardList ();
-
 				//将刚刚打出的牌型集合返回..
 				return card_set;
-			} else {
+			} else 
+			{
+				this.Reset ();
 				return null;
 			}
+		}
+
+		public void RemoveCardSet(RX_CardSet sender,UISprite pool)
+		{
+			sender.Lister.ForEach((RX_Card item) =>{
+				this.CardList.Remove(item);
+			});
+
+			this.LayoutCardList();
+
+
+			int width 	= pool.width;
+			int height	= pool.height;
+			
+			//每个人最多20张牌,计算出最小的间距
+			int margin = 0;
+			if (this.Position == RX_SEAT_POSITION.RX_SEAT_LEFT ||
+			    this.Position == RX_SEAT_POSITION.RX_SEAT_RIGHT) {
+				margin = height / 20;
+			} else {
+				margin = width / 20;
+			}
+			
+			//求出现在剩余多少张牌
+			int count = sender.Lister.Count;
+			
+			int min = 0 - count / 2 * margin;
+			int temp = min;
+			for (int i = 0; i < count; i++) 
+			{
+				RX_CardManager.CreateSpriteBy (sender.Lister [i], pool, temp,this.Position);
+				temp += margin;
+			}
+		}
+
+		public void Reset()
+		{
+			this.CardList.ForEach((RX_Card item)=>{
+				item.IsPop = false;
+			});
+
+			this.LayoutCardList();
 		}
 	}
 }

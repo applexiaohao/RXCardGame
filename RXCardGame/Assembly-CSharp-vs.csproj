@@ -189,6 +189,8 @@
      <Compile Include="Assets\RX_CardType.cs" />
      <Compile Include="Assets\RX_Define.cs" />
      <Compile Include="Assets\RX_Manager.cs" />
+     <Compile Include="Assets\RX_PopCardSet.cs" />
+     <Compile Include="Assets\RX_PopCardSetManager.cs" />
      <Compile Include="Assets\RX_Resources.cs" />
      <Compile Include="Assets\RX_SeatInfo.cs" />
      <Compile Include="Assets\RX_UserInfo.cs" />

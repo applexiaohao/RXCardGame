@@ -84,24 +84,104 @@ namespace AssemblyCSharp
 		/// <summary>
 		/// 精灵池...
 		/// </summary>
-		private static List<UISprite> sprite_pool = null;
-		private static List<UISprite> Pool{
+		private static List<UISprite> bottom_sprite_pool = null;
+		private static List<UISprite> BottomPool{
 			get{
-				if (sprite_pool == null) {
-					sprite_pool = new List<UISprite> ();
+				if (bottom_sprite_pool == null) {
+					bottom_sprite_pool = new List<UISprite> ();
 				}
-				return sprite_pool;
+				return bottom_sprite_pool;
 			}
 		}
+		private static List<UISprite> left_sprite_pool = null;
+		private static List<UISprite> LeftPool{
+			get{
+				if (left_sprite_pool == null) {
+					left_sprite_pool = new List<UISprite> ();
+				}
+				return left_sprite_pool;
+			}
+		}
+		private static List<UISprite> right_sprite_pool = null;
+		private static List<UISprite> RightPool{
+			get{
+				if (right_sprite_pool == null) {
+					right_sprite_pool = new List<UISprite> ();
+				}
+				return right_sprite_pool;
+			}
+		}	
+		private static List<UISprite> top_sprite_pool = null;
+		private static List<UISprite> TopPool{
+			get{
+				if (top_sprite_pool == null) {
+					top_sprite_pool = new List<UISprite> ();
+				}
+				return top_sprite_pool;
+			}
+		}
+		private static List<UISprite> GetPool(RX_SEAT_POSITION pos)
+		{
+			List<UISprite> pool = null;
+			switch (pos) {
+			case RX_SEAT_POSITION.RX_SEAT_LEFT:
+				{
+					pool = LeftPool;
+					break;
+				}
+			case RX_SEAT_POSITION.RX_SEAT_BOTTOM:
+				{
+					pool = BottomPool;
+					break;
+				}
+			case RX_SEAT_POSITION.RX_SEAT_RIGHT:
+				{
+					pool = RightPool;
+					break;
+				}
+			case RX_SEAT_POSITION.RX_SEAT_TOP:
+				{
+					pool = TopPool;
+					break;
+				}
+			}
 
+			return pool;
+		}
 		/// <summary>
 		/// 通过一张牌对象和容器对象还有坐标x创建一张图片
 		/// </summary>
 		/// <returns>The sprite by.</returns>
 		/// <param name="card">Card.</param>
 		/// <param name="parent">Parent.</param>
-		/// <param name="x">The x coordinate.</param>
-		public static UISprite CreateSpriteBy(RX_Card card,UISprite parent,int x)
+	
+		public struct Rect
+		{
+			public float x;
+			public float y;
+			public float width;
+			public float heitht;
+		}
+
+		static Rect GetRect(int p1,float p2,RX_SEAT_POSITION pos)
+		{
+			Rect rect = new Rect ();
+
+			if (pos == RX_SEAT_POSITION.RX_SEAT_LEFT || pos == RX_SEAT_POSITION.RX_SEAT_RIGHT) {
+				rect.y = (float)p1;
+				rect.x = (float)p2;
+			} else {
+				rect.x = (float)p1;
+				rect.y = (float)p2;
+			}
+
+			rect.width = 42f;
+			rect.heitht = 60f;
+
+			return rect;
+		}
+
+		public static UISprite CreateSpriteBy(RX_Card card,UISprite parent,int pp,RX_SEAT_POSITION pos)
 		{			
 			//创建精灵对象,通过NGUITools.AddChild函数
 			UISprite sprite = NGUITools.AddChild<UISprite> (parent.gameObject);
@@ -112,25 +192,25 @@ namespace AssemblyCSharp
 			//为一个NGUI的游戏控件,添加缺失的组件
 			UIButton button = NGUITools.AddMissingComponent<UIButton> (sprite.gameObject);
 	
-			sprite.depth = x + 300;
+			sprite.depth = pp + 300;
 			sprite.atlas = RX_Resources.DefaultResources.CardAtlas;
 			sprite.spriteName = card.ToString ();
 
+			Rect sprite_rect = GetRect (pp,card.PositionY, pos);
 			//设置NGUI控件在屏幕上的显示位置和大小
-			sprite.SetRect (x, card.PositionY, 42f, 60f);
+			sprite.SetRect (sprite_rect.x, sprite_rect.y, sprite_rect.width, sprite_rect.heitht);
 
-		
 			button.onClick.Add (new EventDelegate (() => {
 
 				card.IsPop = !card.IsPop;
-				sprite.SetRect(x,card.PositionY,42f,60f);
+				Rect sr = GetRect (pp,card.PositionY, pos);
+				sprite.SetRect(sr.x,sr.y,sr.width,sr.heitht);
 				
 			}));
-
-
+				
 			//在CreateSpriteBy函数实现的最后
 			//将创建的精灵对象添加到sprite池内
-			sprite_pool.Add (sprite);
+			GetPool(pos).Add(sprite);
 
 			return sprite;
 		}
@@ -138,15 +218,17 @@ namespace AssemblyCSharp
 		/// <summary>
 		/// 将数组内的所有游戏对象全部销毁,并且移除数组...
 		/// </summary>
-		public static void RefreshPool()
+		public static void RefreshPool(RX_SEAT_POSITION pos)
 		{
-			for (int i = 0; i < Pool.Count; i++) 
+			List<UISprite> pool = GetPool (pos);
+			for (int i = 0; i < pool.Count; i++) 
 			{
 				//销毁游戏对象
-				UnityEngine.GameObject.Destroy (sprite_pool [i].gameObject);
+				UnityEngine.GameObject.Destroy (pool [i].gameObject);
 			}
 			//从数组内移除所有的游戏对象
-			sprite_pool.RemoveRange (0, sprite_pool.Count);
+			pool.RemoveRange (0, pool.Count);
+
 		}
 
 		#endregion

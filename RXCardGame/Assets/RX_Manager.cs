@@ -5,26 +5,33 @@ using System.Collections.Generic;
 
 public class RX_Manager : MonoBehaviour {
 
-
-	public Camera world_camera;
-	public Camera gui_camera;
-
-	//public prefab link
-	public Object prefab;
-
 	//public bottom link
 	public UISprite bottom_pool;
 	//public left	link
 	public UISprite left_pool;
 	//public right	link
 	public UISprite right_pool;
+	//
+	public UISprite top_pool;
+
+
+	public UISprite bottom_pop_pool;
+	public UISprite left_pop_pool;
+	public UISprite right_pop_pool;
+	public UILabel	bottom_pop_label;
+	public UILabel	left_pop_label;
+	public UILabel	right_pop_label;
+
 
 	// Use this for initialization
-
 	private RX_SeatInfo bottom_seat;
+	private RX_SeatInfo left_seat;
+	private RX_SeatInfo right_seat;
+	private RX_SeatInfo top_seat;
 
 
-	public UILabel label;
+	private RX_PopCardSet popcardset;
+
 	void Start () 
 	{
 		this.Reshuffle ();
@@ -38,19 +45,107 @@ public class RX_Manager : MonoBehaviour {
 	/// <summary>
 	/// 弹出选中的牌型
 	/// </summary>
+	/// 
+	/// 
+	private RX_SeatInfo seat = null;
 	public void PopSet()
 	{
-		RX_CardSet cardset = bottom_seat.PopCardSet ();
+
+		RX_CardSet cardset = seat.PopCardSet ();
+
+		if (cardset == null) {
+			return;
+		}
+
+		bool is_successed = true;
+
+
+		if (is_successed) 
+		{
+			if (seat == bottom_seat) {
+				seat.RemoveCardSet(cardset,bottom_pop_pool);
+
+				seat = this.right_seat;
+				return;
+			}
+			if (seat == this.right_seat) {
+				seat.RemoveCardSet(cardset,right_pop_pool);
+
+				seat = this.left_seat;
+
+				return;
+			}
+			
+			if (seat == this.left_seat) {
+				seat.RemoveCardSet(cardset,left_pop_pool);
+
+				seat = this.bottom_seat;
+
+			}
+
+		}
 
 		//当牌型不属于斗地主牌型时,cardset则为null
 		//例如,选中的牌是3,4
 		//例如,选中的牌是qq,kk,aa,22s
-		if (cardset == null) {
-			label.text = "出牌失败";
-			Debug.Log ("出牌失败");
-		} else {
-			label.text = "成功出牌" + cardset.ToString ();
-			Debug.Log ("成功出牌" + cardset.ToString ());
+	}
+
+	public void DontPop()
+	{
+		RX_CardSet cardset = new RX_CardSet();
+		cardset.Typer = RX_CARD_SET.RX_TYPE_BUCHU;
+
+		bool isSuccessed = true;
+		RX_PopCardSetManager.AddCardSet(cardset,out isSuccessed);
+
+		if (seat == bottom_seat) 
+		{
+			bottom_pop_label.text = "Pass";
+			UISprite[] ss = bottom_pop_pool.GetComponentsInChildren<UISprite>();
+
+			foreach (UISprite item in ss) 
+			{
+				if (item == bottom_pop_pool) {
+					continue;
+				}
+				GameObject.Destroy(item.gameObject);
+
+			}
+			seat = this.right_seat;
+
+			return;
+		}
+		if (seat == this.right_seat) {
+
+			UISprite[] ss = right_pop_pool.GetComponentsInChildren<UISprite>();
+			
+			foreach (UISprite item in ss) {
+				if (item == right_pop_pool) {
+					continue;
+				}
+				GameObject.Destroy(item.gameObject);
+				
+			}
+
+			seat = this.left_seat;
+			right_pop_label.text = "Pass";
+
+			return;
+		}
+
+		if (seat == this.left_seat) {
+			UISprite[] ss = left_pop_pool.GetComponentsInChildren<UISprite>();
+			
+			foreach (UISprite item in ss) {
+				if (item == left_pop_pool) {
+					continue;
+				}
+				GameObject.Destroy(item.gameObject);
+				
+			}
+
+			seat = this.bottom_seat;
+			left_pop_label.text = "Pass";
 		}
 	}
 
@@ -59,11 +154,27 @@ public class RX_Manager : MonoBehaviour {
 	/// </summary>
 	public void Reshuffle()
 	{
+		this.popcardset = new RX_PopCardSet ();
+
 		//shuffle the card
 		List<RX_Card> list = RX_CardManager.DefaultManager().Reshuffle ();
 
 		//创建底下的座位对象
 		bottom_seat = new RX_SeatInfo(RX_SEAT_POSITION.RX_SEAT_BOTTOM,this.bottom_pool);
 		bottom_seat.CardList = list.GetRange(0,17);
+
+		//创建左边的座位对象
+		left_seat = new RX_SeatInfo(RX_SEAT_POSITION.RX_SEAT_LEFT,this.left_pool);
+		left_seat.CardList = list.GetRange (17, 17);
+
+		//创建右边的座位对象
+		right_seat = new RX_SeatInfo(RX_SEAT_POSITION.RX_SEAT_RIGHT,this.right_pool);
+		right_seat.CardList = list.GetRange (34, 17);
+
+		//创建上边的座位对象
+		top_seat = new RX_SeatInfo(RX_SEAT_POSITION.RX_SEAT_TOP,this.top_pool);
+		top_seat.CardList = list.GetRange (51, 3);
+
+		seat = bottom_seat;
 	}
 }

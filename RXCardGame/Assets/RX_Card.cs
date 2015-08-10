@@ -186,8 +186,6 @@ namespace AssemblyCSharp
 		/// <value>The position y.</value>
 		public float PositionY
 		{
-			// 		1
-			//111111 111111111111111
 			get{ 
 				if (this.IsPop) {
 					return 10f;

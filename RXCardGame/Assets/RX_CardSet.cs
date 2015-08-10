@@ -19,6 +19,7 @@ namespace AssemblyCSharp
 		RX_TYPE_SIDAIER		= 8,
 		RX_TYPE_SAN_BUDAI	= 9,
 		RX_TYPE_SAN_DAI		= 10,
+		RX_TYPE_BUCHU		= 11,
 	}
 
 	public class RX_CardSet
@@ -74,10 +75,13 @@ namespace AssemblyCSharp
 		{
 			string str_card = "";
 
-			for (int i = 0; i < this.Lister.Count; i++) 
-			{
-				str_card += this.Lister[i].ToString() + " : ";	
+			if (this.Lister != null) {
+				for (int i = 0; i < this.Lister.Count; i++) 
+				{
+					str_card += this.Lister[i].ToString() + " : ";	
+				}
 			}
+
 			
 			return string.Format ("[RX_CardSet: Lister={0}, Typer={1}, Level={2}]", str_card, Typer, Level);
 		}
