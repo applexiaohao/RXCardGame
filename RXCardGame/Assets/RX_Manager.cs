@@ -64,12 +64,14 @@ public class RX_Manager : MonoBehaviour {
 		{
 			if (seat == bottom_seat) {
 				seat.RemoveCardSet(cardset,bottom_pop_pool);
+				bottom_pop_label.text = "";
 
 				seat = this.right_seat;
 				return;
 			}
 			if (seat == this.right_seat) {
 				seat.RemoveCardSet(cardset,right_pop_pool);
+				right_pop_label.text = "";
 
 				seat = this.left_seat;
 
@@ -78,6 +80,7 @@ public class RX_Manager : MonoBehaviour {
 			
 			if (seat == this.left_seat) {
 				seat.RemoveCardSet(cardset,left_pop_pool);
+				left_pop_label.text = "";
 
 				seat = this.bottom_seat;
 
