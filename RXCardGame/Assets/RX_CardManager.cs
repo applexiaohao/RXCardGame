@@ -84,67 +84,26 @@ namespace AssemblyCSharp
 		/// <summary>
 		/// 精灵池...
 		/// </summary>
-		private static List<UISprite> bottom_sprite_pool = null;
-		private static List<UISprite> BottomPool{
+		private static Dictionary<int,UISprite> card_pool = null;
+		private static Dictionary<int,UISprite> Pool{
 			get{
-				if (bottom_sprite_pool == null) {
-					bottom_sprite_pool = new List<UISprite> ();
+				if (card_pool == null) {
+					card_pool = new Dictionary<int, UISprite>();
 				}
-				return bottom_sprite_pool;
+				return card_pool;
 			}
 		}
-		private static List<UISprite> left_sprite_pool = null;
-		private static List<UISprite> LeftPool{
-			get{
-				if (left_sprite_pool == null) {
-					left_sprite_pool = new List<UISprite> ();
-				}
-				return left_sprite_pool;
-			}
-		}
-		private static List<UISprite> right_sprite_pool = null;
-		private static List<UISprite> RightPool{
-			get{
-				if (right_sprite_pool == null) {
-					right_sprite_pool = new List<UISprite> ();
-				}
-				return right_sprite_pool;
-			}
-		}	
-		private static List<UISprite> top_sprite_pool = null;
-		private static List<UISprite> TopPool{
-			get{
-				if (top_sprite_pool == null) {
-					top_sprite_pool = new List<UISprite> ();
-				}
-				return top_sprite_pool;
-			}
-		}
-		private static List<UISprite> GetPool(RX_SEAT_POSITION pos)
+	
+		public static void SetPool(UISprite pool,RX_SEAT_POSITION pos)
 		{
-			List<UISprite> pool = null;
-			switch (pos) {
-			case RX_SEAT_POSITION.RX_SEAT_LEFT:
-				{
-					pool = LeftPool;
-					break;
-				}
-			case RX_SEAT_POSITION.RX_SEAT_BOTTOM:
-				{
-					pool = BottomPool;
-					break;
-				}
-			case RX_SEAT_POSITION.RX_SEAT_RIGHT:
-				{
-					pool = RightPool;
-					break;
-				}
-			case RX_SEAT_POSITION.RX_SEAT_TOP:
-				{
-					pool = TopPool;
-					break;
-				}
-			}
+			RX_CardManager.Pool.Add((int)pos,pool);
+		}
+
+		public static UISprite GetPool(RX_SEAT_POSITION pos)
+		{
+			UISprite pool = null;
+
+			RX_CardManager.Pool.TryGetValue((int)pos,out pool);
 
 			return pool;
 		}
@@ -207,10 +166,6 @@ namespace AssemblyCSharp
 				sprite.SetRect(sr.x,sr.y,sr.width,sr.heitht);
 				
 			}));
-				
-			//在CreateSpriteBy函数实现的最后
-			//将创建的精灵对象添加到sprite池内
-			GetPool(pos).Add(sprite);
 
 			return sprite;
 		}
@@ -220,15 +175,12 @@ namespace AssemblyCSharp
 		/// </summary>
 		public static void RefreshPool(RX_SEAT_POSITION pos)
 		{
-			List<UISprite> pool = GetPool (pos);
-			for (int i = 0; i < pool.Count; i++) 
-			{
-				//销毁游戏对象
-				UnityEngine.GameObject.Destroy (pool [i].gameObject);
-			}
-			//从数组内移除所有的游戏对象
-			pool.RemoveRange (0, pool.Count);
+			UISprite pool = RX_CardManager.GetPool (pos);
 
+			if (pool == null) {
+				return;
+			}
+			NGUITools.DestroyChildren(pool.transform);
 		}
 
 		#endregion

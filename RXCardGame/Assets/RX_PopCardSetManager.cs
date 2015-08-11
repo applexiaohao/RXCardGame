@@ -67,6 +67,12 @@ namespace AssemblyCSharp
 
 				RX_CardSet theCareSet = pop.Last();
 
+				theCareSet = theCareSet.Typer == RX_CARD_SET.RX_TYPE_BUCHU ? pop.Last2(): theCareSet;
+
+				if (theCareSet.Typer == RX_CARD_SET.RX_TYPE_BUCHU && sender.Typer != RX_CARD_SET.RX_TYPE_BUCHU) {
+					return true;
+				}
+
 				if (sender.Typer == RX_CARD_SET.RX_TYPE_BUCHU) {
 					return true;
 				}
@@ -118,11 +124,6 @@ namespace AssemblyCSharp
 
 				pop.AddCardSet(sender);
 
-				try {
-				} catch (Exception ex) {
-						
-				}
-
 				isSuccessed = true;
 				RX_PopCardSetManager.SetNeedCreateCardSet();
 
@@ -130,10 +131,7 @@ namespace AssemblyCSharp
 			}
 			else
 			{
-				try {
-				} catch (Exception ex) {
-					
-				}
+
 				isSuccessed = false;
 
 				return sender.ToString() + ":failed";

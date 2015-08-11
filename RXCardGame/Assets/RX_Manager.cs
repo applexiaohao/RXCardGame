@@ -38,8 +38,9 @@ public class RX_Manager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update () 
+	{
+
 	}
 
 	/// <summary>
@@ -59,17 +60,22 @@ public class RX_Manager : MonoBehaviour {
 
 		bool is_successed = true;
 
+		RX_PopCardSetManager.AddCardSet(cardset,out is_successed);
 
 		if (is_successed) 
 		{
-			if (seat == bottom_seat) {
+			if (seat == bottom_seat) 
+			{
+				NGUITools.DestroyChildren(bottom_pop_pool.transform);
 				seat.RemoveCardSet(cardset,bottom_pop_pool);
 				bottom_pop_label.text = "";
 
 				seat = this.right_seat;
 				return;
 			}
-			if (seat == this.right_seat) {
+			if (seat == this.right_seat) 
+			{
+				NGUITools.DestroyChildren(right_pop_pool.transform);
 				seat.RemoveCardSet(cardset,right_pop_pool);
 				right_pop_label.text = "";
 
@@ -78,7 +84,10 @@ public class RX_Manager : MonoBehaviour {
 				return;
 			}
 			
-			if (seat == this.left_seat) {
+			if (seat == this.left_seat) 
+			{
+
+				NGUITools.DestroyChildren(left_pop_pool.transform);
 				seat.RemoveCardSet(cardset,left_pop_pool);
 				left_pop_label.text = "";
 
@@ -104,51 +113,31 @@ public class RX_Manager : MonoBehaviour {
 		if (seat == bottom_seat) 
 		{
 			bottom_pop_label.text = "Pass";
-			UISprite[] ss = bottom_pop_pool.GetComponentsInChildren<UISprite>();
 
-			foreach (UISprite item in ss) 
-			{
-				if (item == bottom_pop_pool) {
-					continue;
-				}
-				GameObject.Destroy(item.gameObject);
+			NGUITools.DestroyChildren(bottom_pop_pool.transform);
 
-			}
 			seat = this.right_seat;
 
 			return;
 		}
 		if (seat == this.right_seat) {
 
-			UISprite[] ss = right_pop_pool.GetComponentsInChildren<UISprite>();
-			
-			foreach (UISprite item in ss) {
-				if (item == right_pop_pool) {
-					continue;
-				}
-				GameObject.Destroy(item.gameObject);
-				
-			}
+			right_pop_label.text = "Pass";
+		
+			NGUITools.DestroyChildren(right_pop_pool.transform);
 
 			seat = this.left_seat;
-			right_pop_label.text = "Pass";
 
 			return;
 		}
 
 		if (seat == this.left_seat) {
-			UISprite[] ss = left_pop_pool.GetComponentsInChildren<UISprite>();
-			
-			foreach (UISprite item in ss) {
-				if (item == left_pop_pool) {
-					continue;
-				}
-				GameObject.Destroy(item.gameObject);
-				
-			}
+
+			left_pop_label.text = "Pass";
+
+			NGUITools.DestroyChildren(left_pop_pool.transform);
 
 			seat = this.bottom_seat;
-			left_pop_label.text = "Pass";
 		}
 	}
 

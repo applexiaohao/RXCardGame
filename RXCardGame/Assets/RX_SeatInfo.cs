@@ -96,6 +96,9 @@ namespace AssemblyCSharp
 			this.Type 	= RX_ROLE_TYPE.RX_ROLE_NORMAL;
 			this.Position	= pos;
 			this.seat_container = pool;
+
+			//在CreateSpriteBy函数实现的最后
+			RX_CardManager.SetPool(pool,pos);
 		}
 
 		private UISprite	seat_container;
