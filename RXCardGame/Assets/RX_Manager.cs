@@ -62,6 +62,7 @@ public class RX_Manager : MonoBehaviour {
 
 		RX_PopCardSetManager.AddCardSet(cardset,out is_successed);
 
+
 		if (is_successed) 
 		{
 			if (seat == bottom_seat) 
