@@ -68,6 +68,7 @@
 -define:UNITY_EDITOR
 -define:UNITY_EDITOR_64
 -define:UNITY_EDITOR_OSX
+'Assets/LO_XMLTool.cs'
 'Assets/NGUI/Examples/Scripts/InventorySystem/Game/EquipItems.cs'
 'Assets/NGUI/Examples/Scripts/InventorySystem/Game/EquipRandomItem.cs'
 'Assets/NGUI/Examples/Scripts/InventorySystem/Game/UICursor.cs'
@@ -209,11 +210,14 @@
 'Assets/RX_CardManager.cs'
 'Assets/RX_CardSet.cs'
 'Assets/RX_CardType.cs'
+'Assets/RX_DataServer.cs'
 'Assets/RX_Define.cs'
+'Assets/RX_Error.cs'
 'Assets/RX_Manager.cs'
 'Assets/RX_PopCardSet.cs'
 'Assets/RX_PopCardSetManager.cs'
 'Assets/RX_Resources.cs'
+'Assets/RX_RootScript.cs'
 'Assets/RX_SeatInfo.cs'
 'Assets/RX_UserInfo.cs'
 -r:'/Applications/Unity/Unity.app/Contents/Frameworks/Mono/lib/mono/unity/System.Runtime.Serialization.dll'

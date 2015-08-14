@@ -46,6 +46,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\NGUI-Alert\Scripts\Demo.cs" />
+     <Compile Include="Assets\NGUI-Alert\Scripts\UIAlert.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipItems.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\EquipRandomItem.cs" />
      <Compile Include="Assets\NGUI\Examples\Scripts\InventorySystem\Game\UICursor.cs" />
@@ -183,17 +185,22 @@
      <Compile Include="Assets\NGUI\Scripts\UI\UITexture.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UITooltip.cs" />
      <Compile Include="Assets\NGUI\Scripts\UI\UIViewport.cs" />
-     <Compile Include="Assets\RX_Card.cs" />
-     <Compile Include="Assets\RX_CardManager.cs" />
-     <Compile Include="Assets\RX_CardSet.cs" />
-     <Compile Include="Assets\RX_CardType.cs" />
-     <Compile Include="Assets\RX_Define.cs" />
-     <Compile Include="Assets\RX_Manager.cs" />
-     <Compile Include="Assets\RX_PopCardSet.cs" />
-     <Compile Include="Assets\RX_PopCardSetManager.cs" />
-     <Compile Include="Assets\RX_Resources.cs" />
-     <Compile Include="Assets\RX_SeatInfo.cs" />
-     <Compile Include="Assets\RX_UserInfo.cs" />
+     <Compile Include="Assets\Script\LO_GameServer.cs" />
+     <Compile Include="Assets\Script\LO_XMLTool.cs" />
+     <Compile Include="Assets\Script\RX_Card.cs" />
+     <Compile Include="Assets\Script\RX_CardManager.cs" />
+     <Compile Include="Assets\Script\RX_CardSet.cs" />
+     <Compile Include="Assets\Script\RX_CardType.cs" />
+     <Compile Include="Assets\Script\RX_DataServer.cs" />
+     <Compile Include="Assets\Script\RX_Define.cs" />
+     <Compile Include="Assets\Script\RX_Manager.cs" />
+     <Compile Include="Assets\Script\RX_PopCardSet.cs" />
+     <Compile Include="Assets\Script\RX_PopCardSetManager.cs" />
+     <Compile Include="Assets\Script\RX_Resources.cs" />
+     <Compile Include="Assets\Script\RX_RoomScript.cs" />
+     <Compile Include="Assets\Script\RX_RootScript.cs" />
+     <Compile Include="Assets\Script\RX_SeatInfo.cs" />
+     <Compile Include="Assets\Script\RX_UserInfo.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\NGUI\ReadMe - 3.9.1.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked 1.shader" />
@@ -201,6 +208,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Masked 2.shader" />
      <None Include="Assets\NGUI\Examples\Models\Orc\Orc Skin.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
+     <None Include="Assets\NGUI-Alert\Readme.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />

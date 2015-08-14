@@ -34,6 +34,11 @@ public class RX_Manager : MonoBehaviour {
 
 	void Start () 
 	{
+		Network.InitializeServer(4, 25000, !Network.HavePublicAddress());
+		MasterServer.ipAddress = "192.168.1.101";
+		MasterServer.port = 23466;
+
+		MasterServer.RegisterHost("DouDizhu","1001");
 		this.Reshuffle ();
 	}
 	
