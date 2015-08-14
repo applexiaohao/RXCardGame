@@ -1,14 +1,19 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Script/RX_RoomScript.cs">
+    <Files>
+      <File FileName="Assets/Script/RX_RoomScript.cs" Line="43" Column="31" />
+      <File FileName="Assets/Script/RX_UserInfo.cs" Line="15" Column="16" />
+      <File FileName="Assets/Script/RX_RootScript.cs" Line="68" Column="6" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
-            <Node name="NGUI-Alert" expanded="True">
-              <Node name="Scripts" expanded="True" />
+            <Node name="NGUI" expanded="True" />
+            <Node name="Script" expanded="True">
+              <Node name="RX_RoomScript.cs" selected="True" />
             </Node>
-            <Node name="RX_RoomScript.cs" selected="True" />
           </Node>
         </State>
       </Pad>

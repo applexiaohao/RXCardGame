@@ -10,6 +10,9 @@
 using System;
 namespace AssemblyCSharp
 {
+	/// <summary>
+	/// 用来存储登陆的用户角色,方便在每个场景中获取用户信息
+	/// </summary>
 	public class RX_UserManager
 	{
 		private RX_UserManager()
@@ -26,6 +29,10 @@ namespace AssemblyCSharp
 		}
 	}
 
+
+	/// <summary>
+	/// 用户信息实体类
+	/// </summary>
 	public class RX_UserInfo
 	{
 		public string user_id{get;set;}

@@ -9,10 +9,12 @@
 // ------------------------------------------------------------------------------
 using System;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace AssemblyCSharp
 {
+	/// <summary>
+	/// 游戏服务器
+	/// </summary>
 	public class LO_GameServer:MonoBehaviour
 	{
 		private LO_GameServer ()
