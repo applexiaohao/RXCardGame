@@ -60,6 +60,11 @@ namespace AssemblyCSharp
 			MasterServer.ipAddress = ip;
 			MasterServer.port = port;
 
+			Network.natFacilitatorIP = "115.28.227.1";
+			Network.natFacilitatorPort = 50005;
+
+			Network.InitializeServer(1000,25000,!Network.HavePublicAddress());
+
 			return true;
 		}
 
@@ -68,9 +73,6 @@ namespace AssemblyCSharp
 		/// </summary>
 		public bool CreateRoom(string roomname)
 		{
-			//start...
-			Network.InitializeServer(1000,25000,Network.HavePublicAddress());
-
 			//register a game
 			MasterServer.RegisterHost("Card",roomname);
 
