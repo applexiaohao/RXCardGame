@@ -72,18 +72,7 @@ namespace AssemblyCSharp
 				return this.seat_pos;
 			}
 		}
-
-		/// <summary>
-		/// 当前座位已经确定好PositionType后,UI界面的位置也已经确定
-		/// 只需要Get就够了
-		/// </summary>
-		private Vector3 ui_pos;
-		public Vector3 UIPosition{
-			get{
-				return ui_pos;
-			}
-		}
-
+			
 		#endregion
 
 		/// <summary>

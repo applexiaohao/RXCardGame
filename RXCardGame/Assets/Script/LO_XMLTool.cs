@@ -36,7 +36,7 @@ namespace AssemblyCSharp
 			}
 			catch (Exception e)
 			{
-				
+				NGUIDebug.Log (e);
 				return null;
 			}
 		}

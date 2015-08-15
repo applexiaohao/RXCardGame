@@ -30,22 +30,9 @@ public class RX_Manager : MonoBehaviour {
 	private RX_SeatInfo top_seat;
 
 
-	private RX_PopCardSet popcardset;
-
 	void Start () 
 	{
-		Network.InitializeServer(4, 25000, !Network.HavePublicAddress());
-		MasterServer.ipAddress = "192.168.1.101";
-		MasterServer.port = 23466;
-
-		MasterServer.RegisterHost("DouDizhu","1001");
 		this.Reshuffle ();
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-
 	}
 
 	/// <summary>
@@ -152,8 +139,6 @@ public class RX_Manager : MonoBehaviour {
 	/// </summary>
 	public void Reshuffle()
 	{
-		this.popcardset = new RX_PopCardSet ();
-
 		//shuffle the card
 		List<RX_Card> list = RX_CardManager.DefaultManager().Reshuffle ();
 

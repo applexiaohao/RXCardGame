@@ -43,22 +43,18 @@ namespace AssemblyCSharp
 				if(index_value >= 0 && index_value <= 12)
 				{
 					name = RX_CARD_NAME.RX_NAME_HOT;
-					string_value = "红桃" + (index_value % 13 + 1).ToString();
 				}
 				if(index_value >= 13 && index_value <= 25)
 				{
 					name = RX_CARD_NAME.RX_NAME_FAP;
-					string_value = "方片" + (index_value % 13 + 1).ToString();
 				}
 				if(index_value >= 26 && index_value <= 38)
 				{
 					name = RX_CARD_NAME.RX_NAME_HET;
-					string_value = "黑桃" + (index_value % 13 + 1).ToString();
 				}
 				if(index_value >= 39 && index_value <= 51)
 				{
 					name = RX_CARD_NAME.RX_NAME_MEH;
-					string_value = "梅花" + (index_value % 13 + 1).ToString();
 				}
 					
 				switch (index_value % 13) {
@@ -134,14 +130,12 @@ namespace AssemblyCSharp
 				{
 					name = RX_CARD_NAME.RX_NAME_KIN;
 					level = RX_CARD_LEVEL.RX_LEVEL_S;
-					string_value = "小王";
 				}
 				//大王的判断
 				if(index_value == 53)
 				{
 					name = RX_CARD_NAME.RX_NAME_KIN;
 					level = RX_CARD_LEVEL.RX_LEVEL_B;
-					string_value = "大王";
 				}
 			}
 			get{
@@ -149,7 +143,6 @@ namespace AssemblyCSharp
 			}
 		}
 
-		private string string_value;
 
 		public RX_Card (int index)
 		{

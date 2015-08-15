@@ -17,6 +17,8 @@ namespace AssemblyCSharp
 	/// </summary>
 	public class LO_GameServer:MonoBehaviour
 	{
+		#region 单例化过程
+
 		private LO_GameServer ()
 		{
 		}
@@ -45,16 +47,16 @@ namespace AssemblyCSharp
 				return s_LO_NetworkView;
 			}
 		}
+			
+		#endregion
 
 
 		/// <summary>
-		/// init server...
+		/// 初始化设置游戏远程服务器
 		/// </summary>
-		/// <param name="ip">Ip.</param>
-		/// <param name="port">Port.</param>
 		public bool InitServer(string ip,int port)
 		{
-			//set property
+			//设置MasterServer的ip地址和port端口
 			MasterServer.ipAddress = ip;
 			MasterServer.port = port;
 
@@ -62,10 +64,9 @@ namespace AssemblyCSharp
 		}
 
 		/// <summary>
-		/// Starts the server.
+		/// 创建游戏房间函数
 		/// </summary>
-		/// <returns><c>true</c>, if server was started, <c>false</c> otherwise.</returns>
-		public bool StartServer(string roomname)
+		public bool CreateRoom(string roomname)
 		{
 			//start...
 			Network.InitializeServer(1000,25000,Network.HavePublicAddress());
@@ -76,10 +77,11 @@ namespace AssemblyCSharp
 			return true;
 		}
 
+		#region 请求游戏房间列表的过程
 
 		public delegate void RequestRoomComplete(HostData[] list);
 		private RequestRoomComplete complete_block = null;
-		public RequestRoomComplete CompleteBlock{
+		private RequestRoomComplete CompleteBlock{
 			set{
 				complete_block = value;
 			}
@@ -94,19 +96,34 @@ namespace AssemblyCSharp
 
 			MasterServer.RequestHostList("Card");
 		}
+		#endregion
 
+
+
+		#region 加入游戏房间的过程
 
 		public delegate void JoinHostRoomDelegate(int state);
-
-		private JoinHostRoomDelegate join_delegate = null;
+		private JoinHostRoomDelegate join_block = null;
+		private JoinHostRoomDelegate JoinBlock{
+			set{ 
+				join_block = value;
+			}
+			get{ 
+				return join_block;
+			}
+		}
 		public void JoinHostRoom(HostData room,JoinHostRoomDelegate block)
 		{
-			this.join_delegate = block;
-
-			NetworkConnectionError error = Network.Connect(room);
-
-			Debug.Log(error);
+			//设定回调函数
+			this.JoinBlock = block;
+			//加入房间
+			Network.Connect(room);
 		}
+
+
+		#endregion
+
+		#region 发送游戏消息的过程
 
 		public void SendGameMessage(string message)
 		{
@@ -119,13 +136,12 @@ namespace AssemblyCSharp
 			Debug.Log(message);
 		}
 
-		#region Behaviour Actions
+		#endregion
 
 
-		/// <summary>
-		/// some event notification from master server
-		/// </summary>
-		/// <param name="ev">Ev.</param>
+		#region 游戏脚本中的过程
+
+
 		public void OnMasterServerEvent(MasterServerEvent ev)
 		{
 			switch (ev) {
@@ -160,12 +176,12 @@ namespace AssemblyCSharp
 
 		public void OnPlayerConnected(NetworkPlayer player)
 		{
-
+			Debug.Log("OnPlayerConnected");
 		}
 
 		public void OnConnectedToServer()
 		{
-			this.join_delegate(0);
+			this.JoinBlock(0);
 			Debug.Log("OnConnectedToServer");
 		}
 

@@ -70,7 +70,7 @@ namespace AssemblyCSharp
 		{
 			isConnectedToDataServer = true;
 
-			string register_url = "http://project.lanou3g.com/game/unity/doudizhu/register.php?";
+			string register_url = RX_Define.RX_URI + "register.php?";
 
 			register_url += "name="+this.Name;
 			register_url += "&&";
@@ -103,7 +103,7 @@ namespace AssemblyCSharp
 		{
 			isConnectedToDataServer = true;
 			
-			string register_url = "http://project.lanou3g.com/game/unity/doudizhu/login.php?";
+			string register_url = RX_Define.RX_URI + "login.php?";
 			
 			register_url += "name="+this.Name;
 			register_url += "&&";

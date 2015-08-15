@@ -96,6 +96,15 @@ namespace AssemblyCSharp
 
 		//
 		public const int RX_BIG_NUMBER = 53;
+
+		//游戏数据服务器用的url地址
+		public const string RX_URI = "http://project.lanou3g.com/game/unity/doudizhu/";
+
+		//游戏房间服务器用到的ip地址
+		public const string RX_ServerIP = "115.28.227.1";
+
+		//游戏房间服务器用到的端口
+		public const int RX_ServerPort = 23466;
 	}
 }
 

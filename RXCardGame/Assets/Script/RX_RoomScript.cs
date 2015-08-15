@@ -14,7 +14,8 @@ public class RX_RoomScript : MonoBehaviour {
 	/// </summary>
 	public void CreateRoom()
 	{
-		LO_GameServer.DefaultServer.StartServer(RX_UserManager.DefaultUser.user_name + "'s DZZ");
+		//创建游戏房间
+		LO_GameServer.DefaultServer.CreateRoom(RX_UserManager.DefaultUser.user_name + "'s DZZ");
 	}
 
 	/// <summary>
@@ -85,7 +86,7 @@ public class RX_RoomScript : MonoBehaviour {
 	void Start () {
 
 		//初始化游戏的MasterServer服务器
-		LO_GameServer.DefaultServer.InitServer("115.28.227.1",23466);
+		LO_GameServer.DefaultServer.InitServer(RX_Define.RX_ServerIP,RX_Define.RX_ServerPort);
 
 		//设定登陆游戏服务器的游戏角色
 		sceneTitle.text = RX_UserManager.DefaultUser.user_name;
