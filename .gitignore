@@ -1,10 +1,11 @@
 #文件
-Assembly-CSharp-Editor-vs.csproj
-Assembly-CSharp-Editor.csproj
-Assembly-CSharp.csproj
-RXCardGame-csharp.sln
-RXCardGame.sln
-RXCardGame.userprefs
+/RXCardGame/Assembly-CSharp-Editor-vs.csproj
+/RXCardGame/Assembly-CSharp-Editor.csproj
+/RXCardGame/Assembly-CSharp.csproj
+/RXCardGame/RXCardGame-csharp.sln
+/RXCardGame/RXCardGame.sln
+/RXCardGame/RXCardGame.userprefs
 # 文件夹
-/Library/
-/obj/
+/RXCardGame/Library/
+/RXCardGame/obj/
+/RXCardGame/Temp/
