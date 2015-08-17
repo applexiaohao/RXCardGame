@@ -96,7 +96,7 @@ public class NGUIDebug : MonoBehaviour
 
 	static public void Clear () { mLines.Clear(); }
 
-	/// <summary>
+	/// <summary>mRayDebug
 	/// Draw bounds immediately. Won't be remembered for the next frame.
 	/// </summary>
 

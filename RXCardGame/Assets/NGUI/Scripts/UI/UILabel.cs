@@ -206,6 +206,7 @@ public class UILabel : UIWidget
 	{
 		get
 		{
+			//NGUIDebug.Log ("mTrueTypeFont : " + mTrueTypeFont + "mFont : " + mFont);
 			if (mTrueTypeFont != null) return mTrueTypeFont;
 			return (mFont != null ? mFont.dynamicFont : null);
 		}

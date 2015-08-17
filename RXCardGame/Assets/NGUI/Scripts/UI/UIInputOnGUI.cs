@@ -29,7 +29,7 @@ public class UIInputOnGUI : MonoBehaviour
 
 	void OnGUI ()
 	{
-		if (mInput.isSelected && Event.current.rawType == EventType.KeyDown)
+		if (Event.current.rawType == EventType.KeyDown)
 			mInput.ProcessEvent(Event.current);
 	}
 #endif

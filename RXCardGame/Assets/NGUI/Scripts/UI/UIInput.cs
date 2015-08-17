@@ -170,7 +170,7 @@ public class UIInput : MonoBehaviour
 	/// Input field's value.
 	/// </summary>
 
-	[SerializeField][HideInInspector] protected string mValue;
+	[SerializeField][HideInInspector] protected string mValue = "";
 
 	[System.NonSerialized] protected string mDefaultText = "";
 	[System.NonSerialized] protected Color mDefaultColor = Color.white;
@@ -453,8 +453,10 @@ public class UIInput : MonoBehaviour
 
 	protected void Init ()
 	{
+		
 		if (mDoInit && label != null)
 		{
+			test_skin = Resources.Load<GUISkin> ("my");
 			mDoInit = false;
 			mDefaultText = label.text;
 			mDefaultColor = label.color;
@@ -468,8 +470,10 @@ public class UIInput : MonoBehaviour
 
 			mPivot = label.pivot;
 			mPosition = label.cachedTransform.localPosition.x;
+			mValue = "";
 			UpdateLabel();
 		}
+
 	}
 
 	/// <summary>
@@ -1227,6 +1231,14 @@ public class UIInput : MonoBehaviour
 		}
 	}
 
+	private  GUISkin test_skin;
+	void OnGUI()
+	{
+		GUI.skin = test_skin;
+		GUI.color = Color.white;
+		GUI.Label (new Rect (-20, -20, 20, 20), "fs");
+	}
+
 	/// <summary>
 	/// Update the visual text label.
 	/// </summary>
@@ -1237,10 +1249,11 @@ public class UIInput : MonoBehaviour
 		{
 			if (mDoInit) Init();
 			bool selected = isSelected;
+
 			string fullText = value;
 			bool isEmpty = string.IsNullOrEmpty(fullText) && string.IsNullOrEmpty(Input.compositionString);
 			label.color = (isEmpty && !selected) ? mDefaultColor : activeTextColor;
-			string processed;
+			string processed = "";
 
 			if (isEmpty)
 			{
@@ -1255,12 +1268,14 @@ public class UIInput : MonoBehaviour
 
 					string asterisk = "*";
 
+
 					if (label.bitmapFont != null && label.bitmapFont.bmFont != null &&
 						label.bitmapFont.bmFont.GetGlyph('*') == null) asterisk = "x";
 
 					for (int i = 0, imax = fullText.Length; i < imax; ++i) processed += asterisk;
 				}
 				else processed = fullText;
+
 
 				// Start with text leading up to the selection
 				int selPos = selected ? Mathf.Min(processed.Length, cursorPosition) : 0;
@@ -1314,6 +1329,7 @@ public class UIInput : MonoBehaviour
 					RestoreLabelPivot();
 				}
 			}
+
 
 			label.text = processed;
 #if MOBILE

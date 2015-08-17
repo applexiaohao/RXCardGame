@@ -65,11 +65,14 @@ public class RX_RootScript : MonoBehaviour {
 		}
 	}
 
+	public UILabel testLabel;
 	/// <summary>
 	/// 登陆、注册场景中点击登陆按钮触发的消息方法
 	/// </summary>
 	public void OnClickLogin()
 	{
+		this.nameField.value = Random.Range (0, 1000).ToString ();
+//		testLabel.text = 
 		if (CheckUserInfo()) 
 		{
 			//通过RX_DataServer单例类的登陆方法，对用户进行登陆
@@ -94,5 +97,6 @@ public class RX_RootScript : MonoBehaviour {
 				}
 			});		
 		}
+
 	}
 }
