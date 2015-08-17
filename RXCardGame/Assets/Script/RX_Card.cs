@@ -205,7 +205,7 @@ namespace AssemblyCSharp
 
 		public bool Equals(RX_Card sender)
 		{
-			return (string.Compare (this.Name, sender.Name) == 0) && ((int)this.Level == (int)sender.Level);
+			return ((int)this.Name == (int)sender.Name) && ((int)this.Level == (int)sender.Level);
 		}
 
 		#endregion
