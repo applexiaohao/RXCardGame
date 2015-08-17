@@ -75,6 +75,8 @@ namespace AssemblyCSharp
 			
 		#endregion
 
+
+		public RX_UserInfo User{ get; set; }
 		/// <summary>
 		/// 构造函数
 		/// </summary>
@@ -194,7 +196,10 @@ namespace AssemblyCSharp
 		public void RemoveCardSet(RX_CardSet sender,UISprite pool)
 		{
 			sender.Lister.ForEach((RX_Card item) =>{
-				this.CardList.Remove(item);
+
+				this.CardList.RemoveAll(((RX_Card obj) => {
+					return obj.Equals(item);
+				}));
 			});
 
 			this.LayoutCardList();

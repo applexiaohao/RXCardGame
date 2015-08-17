@@ -9,9 +9,41 @@
 // ------------------------------------------------------------------------------
 using System;
 using UnityEngine;
+using System.Xml;
+using System.Collections.Generic;
+using System.Xml.Serialization;
+
 
 namespace AssemblyCSharp
 {
+	[XmlRoot("rx_message")]
+	public class LO_GameMessage
+	{
+		public LO_GameMessage()
+		{
+			
+		}
+
+		[XmlElement("rx_msg")]
+		public string message{ set; get;}
+
+		[XmlElement("rx_state")]
+		public int state{ set; get; }
+
+		[XmlElement("rx_user")]
+		public RX_UserInfo user{ set; get; }
+
+		[XmlArray("rx_users"),XmlArrayItem("rx_user")]
+		public List<RX_UserInfo> user_list {set;get;}
+
+		[XmlElement("rx_cardset")]
+		public RX_CardSet cardset{ set; get;}
+
+		public override string ToString ()
+		{
+			return LO_XMLTool.Serializer (typeof(LO_GameMessage), this);
+		}
+	}
 	/// <summary>
 	/// 游戏服务器
 	/// </summary>
@@ -21,6 +53,7 @@ namespace AssemblyCSharp
 
 		private LO_GameServer ()
 		{
+
 		}
 
 		private static GameObject s_LO_GameServer_object;
@@ -103,6 +136,60 @@ namespace AssemblyCSharp
 
 
 		#region 加入游戏房间的过程
+		private List<RX_UserInfo> user_list;
+		public RX_UserInfo LeftUser{
+			get {
+				if (this.user_list == null) {
+					return null;
+				}
+				RX_UserInfo u0 = this.user_list [0];
+				RX_UserInfo u1 = this.user_list [1];
+				RX_UserInfo u2 = this.user_list [2];
+
+				RX_UserInfo u = RX_UserManager.DefaultUser;
+
+				if (u.Equals(u0)) {
+					return u2;
+				}
+
+				if (u.Equals(u1)) {
+					return u0;
+				}
+
+				if (u.Equals(u2)) {
+					return u1;
+				}
+
+				return null;
+			}
+		}
+
+		public RX_UserInfo RightUser{
+			get {
+				if (this.user_list == null) {
+					return null;
+				}
+				RX_UserInfo u0 = this.user_list [0];
+				RX_UserInfo u1 = this.user_list [1];
+				RX_UserInfo u2 = this.user_list [2];
+
+				RX_UserInfo u = RX_UserManager.DefaultUser;
+
+				if (u.Equals(u0)) {
+					return u1;
+				}
+
+				if (u.Equals(u1)) {
+					return u2;
+				}
+
+				if (u.Equals(u2)) {
+					return u0;
+				}
+
+				return null;
+			}
+		}
 
 		public delegate void JoinHostRoomDelegate(int state);
 		private JoinHostRoomDelegate join_block = null;
@@ -125,6 +212,50 @@ namespace AssemblyCSharp
 
 		#endregion
 
+
+		#region 开始游戏
+		//开始游戏
+		public void StartGame()
+		{
+			if (Network.isServer)
+			{
+				LO_GameMessage message = new LO_GameMessage ();
+				message.state = 103;
+				message.user = RX_UserManager.DefaultUser;
+
+				SendGameMessage (message.ToString ());
+			}
+		}
+
+		public delegate void PopCardSetDelegate(RX_UserInfo user);
+
+		private PopCardSetDelegate PopBlock{ set; get; }
+
+		public void PopCardSet(RX_CardSet sender,PopCardSetDelegate block)
+		{
+			if (sender == null) {
+				return;
+			}
+			if (block == null) {
+				return;
+			}
+
+			this.PopBlock = block;
+		}
+
+		//安排座位
+		private void ArrangeSeat()
+		{
+			RX_UserInfo u0 = this.user_list [0];
+			RX_UserInfo u1 = this.user_list [1];
+			RX_UserInfo u2 = this.user_list [2];
+
+			u0.seat_index = 0;
+			u1.seat_index = 1;
+			u2.seat_index = 2;
+		}
+		#endregion
+
 		#region 发送游戏消息的过程
 
 		public void SendGameMessage(string message)
@@ -135,7 +266,57 @@ namespace AssemblyCSharp
 		[RPC]
 		public void RemoteReceiveMessage(string message)
 		{
-			Debug.Log(message);
+			LO_GameMessage gmsg = (LO_GameMessage)LO_XMLTool.Deserialize(typeof(LO_GameMessage),message);
+
+
+			switch (gmsg.state) {
+				case 100://游戏玩家足够后,加载游戏场景
+				{
+					if (Network.isClient) {
+						this.user_list = new List<RX_UserInfo> (gmsg.user_list);
+					}
+					Application.LoadLevel ("GameScene");
+					break;
+				}
+				case 101://加入游戏玩家
+				{
+					this.user_list.Add (gmsg.user);
+					break;
+				}
+			case 102:
+				{
+					break;
+				}
+				case 103://开始游戏,出牌
+				{
+					RX_UserInfo user = this.user_list.Find (((RX_UserInfo obj) => {
+						int seat_index = 0;
+						if (gmsg.user.seat_index == 0) {
+							seat_index = 1;
+						}
+						if (gmsg.user.seat_index == 1) {
+							seat_index = 2;
+						}
+						if (gmsg.user.seat_index == 2) {
+							seat_index = 0;
+						}
+
+						return obj.seat_index == seat_index;
+					}));
+						
+					if (!RX_UserManager.DefaultUser.Equals(gmsg.user)) 
+					{
+						bool is_successed = true;
+						RX_PopCardSetManager.AddCardSet (gmsg.cardset, out is_successed);
+					}
+					this.PopBlock (user);
+					break;
+				}
+			default:
+				{
+					break;
+				}
+			}
 		}
 
 		#endregion
@@ -149,6 +330,8 @@ namespace AssemblyCSharp
 			switch (ev) {
 			case MasterServerEvent.RegistrationSucceeded:
 			{
+					this.user_list = new List<RX_UserInfo> ();
+					this.user_list.Add (RX_UserManager.DefaultUser);
 				break;
 			}
 				
@@ -179,12 +362,33 @@ namespace AssemblyCSharp
 		public void OnPlayerConnected(NetworkPlayer player)
 		{
 			Debug.Log("OnPlayerConnected");
+			int count = Network.connections.Length;
+
+			if (count == 3) 
+			{
+				//安排好座位后,进入游戏场景
+				this.ArrangeSeat ();
+
+				LO_GameMessage message = new LO_GameMessage ();
+				message.state = 100;
+				message.user_list = this.user_list;
+				message.message = "create game";
+
+				SendGameMessage (message.ToString());
+			}
 		}
 
 		public void OnConnectedToServer()
 		{
 			this.JoinBlock(0);
 			Debug.Log("OnConnectedToServer");
+
+			LO_GameMessage message = new LO_GameMessage ();
+			message.state = 101;
+			message.user = RX_UserManager.DefaultUser;
+			message.message = "join game";
+
+			SendGameMessage (message.ToString());
 		}
 
 		#endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace AssemblyCSharp
 {
@@ -22,6 +23,7 @@ namespace AssemblyCSharp
 		RX_TYPE_BUCHU		= 11,
 	}
 
+	[XmlRoot("cardset")]
 	public class RX_CardSet
 	{
 		#region 属性设置
@@ -37,6 +39,7 @@ namespace AssemblyCSharp
 		/// Gets or sets the list.
 		/// </summary>
 		/// <value>The list.</value>
+		[XmlArray("crads"),XmlArrayItem("card")]
 		public List<RX_Card> Lister{
 			set{ 
 				card_list = value;
@@ -45,6 +48,7 @@ namespace AssemblyCSharp
 				return card_list;
 			}
 		}
+		[XmlElement("type")]
 		public RX_CARD_SET Typer{
 			set{ 
 				card_type = value;
@@ -53,6 +57,7 @@ namespace AssemblyCSharp
 				return card_type;
 			}
 		}
+		[XmlElement("level")]
 		public RX_CARD_LEVEL Level{
 			set{ 
 				card_level = value;
@@ -73,17 +78,7 @@ namespace AssemblyCSharp
 
 		public override string ToString ()
 		{
-			string str_card = "";
-
-			if (this.Lister != null) {
-				for (int i = 0; i < this.Lister.Count; i++) 
-				{
-					str_card += this.Lister[i].ToString() + " : ";	
-				}
-			}
-
-			
-			return string.Format ("[RX_CardSet: Lister={0}, Typer={1}, Level={2}]", str_card, Typer, Level);
+			return LO_XMLTool.Serializer (typeof(RX_CardSet), this);
 		}
 	}
 }

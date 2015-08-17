@@ -299,10 +299,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!4 &655978805 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-  m_PrefabInternal: {fileID: 1410066010}
 --- !u!1001 &699209998
 Prefab:
   m_ObjectHideFlags: 0
@@ -494,56 +490,6 @@ MonoBehaviour:
   mMaxLineHeight: 0
   mLineWidth: 0
   mMultiline: 1
---- !u!1001 &1410066010
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1568783276}
-    m_Modifications:
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -160
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 167
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 11400004, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: mTrueTypeFont
-      value: 
-      objectReference: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    - target: {fileID: 11400004, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-      propertyPath: mFont
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 23c0cd5b08147994c821cf4615b25bc7, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1416977079
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,7 +655,6 @@ Transform:
   - {fileID: 2133222542}
   - {fileID: 699209999}
   - {fileID: 1692665534}
-  - {fileID: 655978805}
   m_Father: {fileID: 0}
   m_RootOrder: 2
 --- !u!54 &1568783277
@@ -1114,7 +1059,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameField: {fileID: 1416977083}
   pwdField: {fileID: 2133222545}
-  testLabel: {fileID: 0}
 --- !u!1 &2133222541
 GameObject:
   m_ObjectHideFlags: 0
