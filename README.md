@@ -1,7 +1,7 @@
 # 热血斗地主
 
-测试视频:
-<embed src="http://player.youku.com/player.php/sid/XMTMxODc1NTU1Ng==/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+@[测试视频](http://v.youku.com/v_show/id_XMTMxODc1NTU1Ng==.html#paction)
+
 
 ## 模块化思想设计
 
