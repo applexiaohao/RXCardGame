@@ -1,6 +1,6 @@
 # 热血斗地主
 
-[TOC]
+测试视频：<iframe height=498 width=510 src="http://player.youku.com/embed/XNjcyMDU4Njg0" frameborder=0 allowfullscreen></iframe>
 
 ## 模块化思想设计
 
